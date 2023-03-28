@@ -22,7 +22,11 @@ const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2022-11-15',
 });
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)({ origin: true }));
+app.use((0, cors_1.default)({
+    origin: 'https://billamazonclone.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express_1.default.json());
 app.use(body_parser_1.default.json());
 app.get('/api/data', (req, res) => {
@@ -71,8 +75,8 @@ app.post('/api/data', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         },
         line_items: tranformedItems,
         mode: 'payment',
-        success_url: `http://localhost:3000/success` || `https://billamazonclone.vercel.app/success`,
-        cancel_url: `http://localhost:3000/checkout` || `https://billamazonclone.vercel.app/checkout`,
+        success_url: `https://billamazonclone.vercel.app/success`,
+        cancel_url: `https://billamazonclone.vercel.app/checkout`,
         metadata: {
             userEmail,
             images: JSON.stringify(newBasket.map((item) => item.image)),
