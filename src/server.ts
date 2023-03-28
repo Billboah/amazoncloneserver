@@ -11,11 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 const app = express();
-app.use(cors({
-              origin: 'https://billamazonclone.vercel.app',
-              methods: ['GET', 'POST', 'PUT', 'DELETE'],
-              allowedHeaders: ['Content-Type', 'Authorization']
-            }));
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json())
 
