@@ -31,14 +31,14 @@ app.get('/api/data', (req, res) => {
             });
 
 app.post('/api/data', async (req, res) => {
-  const { newBasket, products, userEmail } = req.body
+  const { basket, products, userEmail } = req.body
   const allProducts = {
     items: products, // array of product objects imported from somewhere else
     get: function (id: number) {
       return this.items.find((item: Item) => item.id === id)
     },
   }
-  const tranformedItems = newBasket.map((item:Item) => {
+  const tranformedItems = basket.map((item:Item) => {
     const storeItem = allProducts.get(item.id)
     return {
       quantity: item.count,
@@ -78,8 +78,8 @@ app.post('/api/data', async (req, res) => {
     cancel_url: `https://billamazonclone.vercel.app/checkout`,
     metadata: {
       userEmail,
-      images: JSON.stringify(newBasket.map((item:Item) => item.image)),
-      quantity: JSON.stringify(newBasket.map((item:Item) => item.count)),
+      images: JSON.stringify(basket.map((item:Item) => item.image)),
+      quantity: JSON.stringify(basket.map((item:Item) => item.count)),
     },
   })
   const data = session
